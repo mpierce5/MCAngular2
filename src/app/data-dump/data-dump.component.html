@@ -1,0 +1,18 @@
+<div class="container">
+  <input [(ngModel)]="searchTerm">
+  <p>Two Way Binding -- {{searchTerm}}!</p>
+</div>
+<table class="table" *ngIf="tasks && tasks.length">
+  <thead [style.background-color]="getHeaderBackgroundColor()">
+    <tr>
+      <th>Task Name</th>
+      <th>Due Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let task of tasks" (click)="openTask(task.taskName)" [class.isNew]="task.isNew">
+      <td>{{ task.taskName }}</td>
+      <td>{{ task.dueDate | date}}</td>
+    </tr>
+  </tbody>
+</table>
