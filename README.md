@@ -54,16 +54,14 @@ Instruction on how to build this project from scratch.
    ng generate component data-dump
    
 8. Explain what files were created:
-   app.component.css
-   app.component.html
-   app.component.spec.ts
-   app.component.ts
-   app.module.ts
-   index.ts (barrel - puts all exports in a single file so they can be imported together)
+   data-dump.component.css
+   data-dump.component.html
+   data-dump.component.spec.ts
+   data-dump.component.ts
    
 9. Explain that component was added to app.module.ts as an import
 
-10. insert component into root component (app/app.component.html)
+10. Insert component into root component (app/app.component.html)
  -  <app-data-dump></app-data-dump>
  
 11. Create a new folder for interfaces (app/interfaces)
@@ -84,7 +82,7 @@ Instruction on how to build this project from scratch.
     {taskName:'Learn ng2', dueDate:'Thu Dec 15 2016 12:00:00 GMT-0700 (Mountain Standard Time)', isNew:true}
   ];
   
-15. Display data in DataDumpComponent template using ngfor (app/data-dump/data-dump.component.html)
+15. Display data in DataDumpComponent template using *ngfor (app/data-dump/data-dump.component.html)
 <div *ngFor="let task of tasks">
   {{ task.taskName }} {{ task.dueDate }} {{ task.isNew }}
 </div>
@@ -120,7 +118,7 @@ Instruction on how to build this project from scratch.
 		  }
 
 
-19. Set header background color on Table (Show Propery Binding)  
+19. Set header background color on Table (Show Property Binding)  
     (app/data-dump/data-dump.component.html)
 		  [style.background-color]="getHeaderBackgroundColor()"
 		
@@ -138,33 +136,35 @@ Instruction on how to build this project from scratch.
           font-weight: bold;
         }
 		  
-12. Create a two way binding on the page
+21. Create a two way binding on the page
   (app/data-dump/data-dump.component.html)
-    <input [(ngModel)]="searchTerm">
-    <p>Two Way Binding -- {{searchTerm}}!</p>
+    <div class="container">
+      <input [(ngModel)]="searchTerm">
+      <p>Two Way Binding -- {{searchTerm}}!</p>
+    </div>
 	
-13. Two way binding is really a combination of binding to a [property] and an (event) 
+22. Two way binding is really a combination of binding to a [property] and an (event) 
 	  -- below shows another way to write it
       <input [value]="searchTerm" (input)="searchTerm = $event.target.value">
       <p>Two Way Binding -- {{searchTerm}}!</p>
 	
-14. Add a filter for the date
+23. Add a filter for the date
     (app/data-dump/data-dump.component.html)
 	    <td>{{ task.dueDate | date}}</td>
 	
-15. Make Table only display if data is present *ngIf 
+24. Make Table only display if data is present *ngIf 
 	(app/data-dump/data-dump.component.html)
 	  *ngIf="tasks && tasks.length" (on table element)
 	
-16. Create a service to retrieve the data
-  a. In command promp navigate to the folder that you want to service to be in.
+25. Create a service to retrieve the data
+  a. In command prompt navigate to the folder that you want to service to be in.
 	b. ng generate service tasks
 	c. View files created and explain "Injectable" decorator 
 	  app/data-dump/tasks.service.spec.ts
     app/data-dump/tasks.service.ts
   d. explain that it needs to be added as a provider in app.module.ts
 	
-17. Add it as a provider in app.module.ts
+26. Add it as a provider in app.module.ts
 	a. put it in providers and hit alt enter for autocomplete
 	b. console.log() in the service's constructor to make sure it loading
     constructor(  ) {
@@ -173,11 +173,11 @@ Instruction on how to build this project from scratch.
   c. View output in browser console to see that it loaded
   d. Add debugger and show that you can debug typescript from browser
 	
-18. import Tasks interface
+27. Import Tasks interface
   (app/data-dump/tasks.service.ts)
 	  import { Task } from '../interfaces/Task'
 	
-19. Create static tasks in service class
+28. Create tasks in service class
 	(app/data-dump/tasks.service.ts)
 	tasks: Task[] = [
     {taskName:'Take Out trash', dueDate:'Thu Dec 01 2016 11:09:06 GMT-0700 (Mountain Standard Time)', isNew:false},
@@ -185,39 +185,39 @@ Instruction on how to build this project from scratch.
     {taskName:'Learn ng2', dueDate:'Thu Dec 15 2016 12:00:00 GMT-0700 (Mountain Standard Time)', isNew:true}
   ];
 
-20. Create a getTasks function in service (explain at a future time we can show how to make ajax/RxJs calls)
+29. Create a getTasks function in service (explain at a future time we can show how to make HTTP/RxJs calls)
 	(app/data-dump/tasks.service.ts)
 	getTasks(): Task[] {
 		return this.tasks;
 	}
 	
-21. Add TaskService as dependency to DataDump
+30. Add TaskService as dependency to DataDump
   (app/data-dump/data-dump.component.ts)
 	  import { TasksService } from './tasks.service'
 	
-22. Inject TaskService into DataDump using constructor
+31. Inject TaskService into DataDump using constructor
 	(app/data-dump/data-dump.component.ts)
 	  constructor(private tasksService: TasksService) { }
 
-23. Remove hard coded tasks
+32. Remove hard coded tasks
   (app/data-dump/data-dump.component.ts)
     tasks: Task = [];
   
-24. Retrieve task data in ngOnInit - explain lifecycles a little and highlight OnInit import
+33. Retrieve task data in ngOnInit - explain lifecycles a little and highlight OnInit import
 	(app/data-dump/data-dump.component.ts)
     ngOnInit() {
       this.tasks = this.tasksService.getTasks();
     }
 
-25. Verify that App still is now retrieving data from service.
+34. Verify that App still is now retrieving data from service.
 	
-26. Explain re-usability of services (singletons) and components
+35. Explain re-usability of services (singletons) and components
 
-25. Create a production build of the project by compiling project to a distributable using Angular-CLI
+36. Create a production build of the project by compiling project to a distributable using Angular-CLI
 	ng build --prod --aot
 	
-26. show output files in app/dist folder
+37. show output files in app/dist folder
   a. Hit output files from current running server 
 	b. Explain this will be what we serve
 
-27. That's all folks!
+38. That's all folks!
