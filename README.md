@@ -1,5 +1,6 @@
 ** I Recommend completing the Tour of heroes tutorial (https://angular.io/docs/ts/latest/tutorial/)
 ** This will give more insight into the structure of the ng2 app from the ground up.
+** Slides located at https://docs.google.com/presentation/d/1TE3J166lPDcAXixknHGKRRe-__Gipj5zZ1tAI8xaxZ8/edit?usp=sharing
  
 Instruction on how to build this project from scratch.
  
