@@ -1,33 +1,100 @@
-1. create a new component
-2. explain files created
-3. insert component into root component
-4. Create a new folder for interfaces
-5. Create a new interface for tasks
+** I Recommend completing the Tour of heroes tutorial (https://angular.io/docs/ts/latest/tutorial/)
+** This will give more insight into the structure of the ng2 app from the ground up.
+ 
+Instruction on how to build this project from scratch.
+ 
+1. Download NodeJS
+ - Go to https://nodejs.org/en/download/
+   Explain why we are using NodeJS
+   Download and install
+   a. Open command prompt
+     - Type node -v and verify that it is installed
+     - npm install npm@latest -g
+     - npm -v
 
-export interface Task {
-  taskName: string;
-  dueDate: string;
-  isNew: boolean;
-}
+2. InstallAngular CLI using NPM
+  - https://github.com/angular/angular-cli
+    Explain why, what, and how Angular CLI
+    
+    a. In command prompt
+      - npm install -g angular-cli
 
-6. Import interface into component
-import { Task } from '../interfaces/Task'
+3. Create a new project using Angular CLI 
+   a. Navigate to a folder for your new project
+     - ng new PROJECT_NAME
+     - cd PROJECT_NAME
+     - ng serve
+   b. Navigate to the http://localhost:4200/
 
-7. Create an array of tasks in the class
-tasks: Task[] = [
+4. Create a new project in intellij
+   a. Navigate to src/app/app.component.ts
+   b. Make a change to the value of title variable (Hello MC!)
+   c. Watch your webpage to see it update with your change
+     - Congratulations (Hello World Completed)
+
+5. Walk through files created
+   a. config files
+   b. App files
+   c. Test Files
+
+6. Explain what a component is (similar to web-component)
+  - Imports 
+  - Component Decorator (@Component)
+    - selector reference index.html to show that app is bootstrapped with this component
+    - templateUrl
+    - styleUrls 
+    - Services providers: [TranslationService]
+  
+  Class 
+    - constructor
+    - data members
+    - functions
+    
+7. Create a new component using angular-cli (data-dump will show task data)
+   ng generate component data-dump
+   
+8. Explain what files were created:
+   app.component.css
+   app.component.html
+   app.component.spec.ts
+   app.component.ts
+   app.module.ts
+   index.ts (barrel - puts all exports in a single file so they can be imported together)
+   
+9. Explain that component was added to app.module.ts as an import
+
+10. insert component into root component (app/app.component.html)
+ -  <app-data-dump></app-data-dump>
+ 
+11. Create a new folder for interfaces (app/interfaces)
+12. Create a new interface for tasks (app/interfaces/Task.ts)
+  export interface Task {
+    taskName: string;
+    dueDate: string;
+    isNew: boolean;
+  }
+
+13. Import interface into component (app/data-dump/data-dump.component.ts)
+ import { Task } from '../interfaces/Task'
+
+14. Create an array of tasks in DataDumpComponent class (app/data-dump/data-dump.component.ts)
+ tasks: Task[] = [
     {taskName:'Take Out trash', dueDate:'Thu Dec 01 2016 11:09:06 GMT-0700 (Mountain Standard Time)', isNew:false},
     {taskName:'Go Fly Fishing', dueDate:'Fri Dec 16 2016 12:00:00 GMT-0700 (Mountain Standard Time)', isNew:true},
     {taskName:'Learn ng2', dueDate:'Thu Dec 15 2016 12:00:00 GMT-0700 (Mountain Standard Time)', isNew:true}
   ];
   
-8. Display data in template using ngfor
+15. Display data in DataDumpComponent template using ngfor (app/data-dump/data-dump.component.html)
 <div *ngFor="let task of tasks">
   {{ task.taskName }} {{ task.dueDate }} {{ task.isNew }}
 </div>
 
-9.a Add bootstrap CDNs (Update notes)
-
-9.b Add bootstrap table system to layout our data
+16. Add bootstrap CDNs (app/index.html)
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+17. Update DataDumpComponent template to show data in bootstrap table (app/data-dump/data-dump.component.html)
 	<table class="table">
 	  <thead>
 		<tr>
@@ -43,103 +110,114 @@ tasks: Task[] = [
 	  </tbody>
 	</table>
 
-10. Add a click event to each line that displays task name on click.
-	- template
+18. Add a click event to table row that displays task name on click. (Shows how to bind to events)
+	- template (app/data-dump/data-dump.component.html)
 		(click)="openTask(task.taskName)" (on tr)
-	- component
+		
+	- component (app/data-dump/data-dump.component.ts)
 		openTask(taskName: string): void{
 			alert('navigated to ' + taskName);
 		  }
 
 
-11. Show Propery Binding 
-	- set header background color
-		[style.background-color]="getHeaderBackgroundColor()"
+19. Set header background color on Table (Show Propery Binding)  
+    (app/data-dump/data-dump.component.html)
+		  [style.background-color]="getHeaderBackgroundColor()"
 		
-		
-	- add function to component
+	- add function to component (app/data-dump/data-dump.component.ts)
 		getHeaderBackgroundColor(): string{
 			return 'gray';
 		}
 
-11. Use property binding for new tasks
-	template (tr)  	-[style.font-weight]="getBoldForNewTask(task.isNew)" 
-	Class
-		- getBoldForNewTask(isNew: boolean) : string{
-			if(isNew)
-			  return 'bold';
-			else
-			  return 'normal';
-		  }
-		  
-		  -----------update
-			[class.isNew]="task.isNew"
+20. Use property binding for new tasks (using class)
+		  (app/data-dump/data-dump.component.html)
+			  [class.isNew]="task.isNew"
 			
-			create css style
-			.isNew {
-				font-weight: bold;
-			}
-		  ----------------
+			create css style (app/data-dump/data-dump.component.css)
+        .isNew {
+          font-weight: bold;
+        }
 		  
-12. Show two way binding -
-	<input [(ngModel)]="searchTerm">
-	<p>Two Way Binding -- {{searchTerm}}!</p>
+12. Create a two way binding on the page
+  (app/data-dump/data-dump.component.html)
+    <input [(ngModel)]="searchTerm">
+    <p>Two Way Binding -- {{searchTerm}}!</p>
 	
-13. Explain what is really happening with 2 way binding
-	<input [value]="searchTerm" (input)="searchTerm = $event.target.value">
-
-	<p>Two Way Binding -- {{searchTerm}}!</p>
+13. Two way binding is really a combination of binding to a [property] and an (event) 
+	  -- below shows another way to write it
+      <input [value]="searchTerm" (input)="searchTerm = $event.target.value">
+      <p>Two Way Binding -- {{searchTerm}}!</p>
 	
 14. Add a filter for the date
-	- filters page
+    (app/data-dump/data-dump.component.html)
+	    <td>{{ task.dueDate | date}}</td>
 	
 15. Make Table only display if data is present *ngIf 
-	- *ngIf="tasks && tasks.length" (on table)
+	(app/data-dump/data-dump.component.html)
+	  *ngIf="tasks && tasks.length" (on table element)
 	
 16. Create a service to retrieve the data
-    Navigate to the folder that you want to service to be in.
-	- ng generate service tasks
-	- explain "Injectable" decorator
-	- explain that it needs to be added as a provider
+  a. In command promp navigate to the folder that you want to service to be in.
+	b. ng generate service tasks
+	c. View files created and explain "Injectable" decorator 
+	  app/data-dump/tasks.service.spec.ts
+    app/data-dump/tasks.service.ts
+  d. explain that it needs to be added as a provider in app.module.ts
 	
 17. Add it as a provider in app.module.ts
-	- put it in providers and hit alt enter for autocomplete
-	- console.log() in the service to make sure it loading (constructor)
-	- constructor(  ) {
-		console.log('test');
-	  }
+	a. put it in providers and hit alt enter for autocomplete
+	b. console.log() in the service's constructor to make sure it loading
+    constructor(  ) {
+      console.log('test');
+    }
+  c. View output in browser console to see that it loaded
+  d. Add debugger and show that you can debug typescript from browser
 	
 18. import Tasks interface
-	import { Task } from '../interfaces/Task'
+  (app/data-dump/tasks.service.ts)
+	  import { Task } from '../interfaces/Task'
 	
-19. Create static tasks in service (remove from data-dump)
+19. Create static tasks in service class
+	(app/data-dump/tasks.service.ts)
 	tasks: Task[] = [
     {taskName:'Take Out trash', dueDate:'Thu Dec 01 2016 11:09:06 GMT-0700 (Mountain Standard Time)', isNew:false},
     {taskName:'Go Fly Fishing', dueDate:'Fri Dec 16 2016 12:00:00 GMT-0700 (Mountain Standard Time)', isNew:true},
     {taskName:'Learn ng2', dueDate:'Thu Dec 15 2016 12:00:00 GMT-0700 (Mountain Standard Time)', isNew:true}
   ];
 
-20. Create a getTasks function in service (explain at a future time we can show how to make ajax/rxjs calls)
+20. Create a getTasks function in service (explain at a future time we can show how to make ajax/RxJs calls)
+	(app/data-dump/tasks.service.ts)
 	getTasks(): Task[] {
 		return this.tasks;
-	  }
-	
-21. Add taskService as dependency to Data Dump
-	- import { TasksService } from './tasks.service'
-	
-22. Add to constructor
-	- constructor(private tasksService: TasksService) { }
-	
-23. Get task data in ngOnInit - explain lifecycles a little
-	ngOnInit() {
-		this.tasks = this.tasksService.getTasks();
 	}
 	
-24. Explain component re-use/subcomponent
+21. Add TaskService as dependency to DataDump
+  (app/data-dump/data-dump.component.ts)
+	  import { TasksService } from './tasks.service'
 	
-25. Build project using angular click
-	- ng build --prod --aot
+22. Inject TaskService into DataDump using constructor
+	(app/data-dump/data-dump.component.ts)
+	  constructor(private tasksService: TasksService) { }
+
+23. Remove hard coded tasks
+  (app/data-dump/data-dump.component.ts)
+    tasks: Task = [];
+  
+24. Retrieve task data in ngOnInit - explain lifecycles a little and highlight OnInit import
+	(app/data-dump/data-dump.component.ts)
+    ngOnInit() {
+      this.tasks = this.tasksService.getTasks();
+    }
+
+25. Verify that App still is now retrieving data from service.
 	
-26. show output files in dist folder
-    - hit output files from current running server
-	- explain this will be what we serve
+26. Explain re-usability of services (singletons) and components
+
+25. Create a production build of the project by compiling project to a distributable using Angular-CLI
+	ng build --prod --aot
+	
+26. show output files in app/dist folder
+  a. Hit output files from current running server 
+	b. Explain this will be what we serve
+
+27. That's all folks!
